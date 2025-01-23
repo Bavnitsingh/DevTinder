@@ -4,27 +4,30 @@ const app = express();
 
 //app.use("/route", rh1, [rh2, rh3], rh4, rh5, rh6);
 // array of route handlers will not affect its performance
-
-app.use(
+// GET /user => middlewares => request Handlers
+// it pass through all the middlewares and at last the route handler handle the response
+app.use("/user", (req, res, next) => {
+  // route handler
+  console.log("Handling route 0");
+  next();
+})
+app.get(
   "/user",
-  [(req, res, next) => {
+  (req, res, next) => {
     // route handler
     console.log("Handling route1");
     next();
-    res.send("Route handler 1");
   },
   (req, res,next) => {
     // route handler
     console.log("Handling route 2");
     next();
-    res.send("Route handler 2");
   },
+  //before this route all are known as middlewares
   (req, res, next) => {
     // route handler
-    console.log("Handling route 3");
-    next();
-    res.send("Route handler 3");
-  }]
+    res.send("Handling route 3");
+  }
 );
 
 
