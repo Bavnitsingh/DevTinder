@@ -2,57 +2,32 @@ const express = require("express");
 const app = express();
 // req /user /user/userId , /user/1
 
-// this is regex(Regular Expression)/a/
-// here is a is coming in the url then it will run otherwise not
-// app.get("/user", (req, res) => {
-//   res.send({
-//     firstName: "Bavnit Singh",
-//     Age: 20,
-//     Profession: "Software Developer",
-//   });
-// });
+//app.use("/route", rh1, [rh2, rh3], rh4, rh5, rh6);
+// array of route handlers will not affect its performance
 
-app.get("/user/:userId/:Name/:password", (req, res) => {
-  console.log(req.params)
-  res.send({
-    firstName: "Bavnit Singh",
-    Age: 20,
-    Profession: "Software Developer",
-  });
-});
+app.use(
+  "/user",
+  [(req, res, next) => {
+    // route handler
+    console.log("Handling route1");
+    next();
+    res.send("Route handler 1");
+  },
+  (req, res,next) => {
+    // route handler
+    console.log("Handling route 2");
+    next();
+    res.send("Route handler 2");
+  },
+  (req, res, next) => {
+    // route handler
+    console.log("Handling route 3");
+    next();
+    res.send("Route handler 3");
+  }]
+);
 
-// app.get("/user", (req, res) => {
-//   console.log(req.query);
-//   res.send({
-//     firstName: "Bavnit Singh",
-//     Age: 20,
-//     Profession: "Software Developer",
-//   });
-// });
-// here b is optional
-app.get("/ab?c", (req, res) => {
-  res.send({
-    firstName: "Bavnit Singh",
-    Age: 20,
-    Profession: "Software Developer",
-  });
-});
-//abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc than also works
-app.get("/ab+c", (req, res) => { 
-  res.send({
-    firstName: "Bavnit Singh",
-    Age: 20,
-    Profession: "Software Developer"
-})
-})
-// abBavnitSinghcd   than also it works
-app.get("/ab*cd", (req, res) => {
-  res.send({
-    firstName: "Bavnit Singh",
-    Age: 20,
-    Profession: "Software Developer",
-  });
-});
+
 
 
 app.listen(3000, () => {

@@ -1,24 +1,28 @@
- - Create a repository
- - Initialize the repository
- - node_modules, package.json, package-lock.json
- - Install express 
- - Create a server
- - Listen to port 7777
- - Write request handlers for /test , /hello
- - Install nodemon and update scripts inside package.json
- - What are dependencies
- - What is the use of "-g" while npm install 
- - Difference between caret and tilde  ( ^ vs ~ )
+- Create a repository
+- Initialize the repository
+- node_modules, package.json, package-lock.json
+- Install express
+- Create a server
+- Listen to port 7777
+- Write request handlers for /test , /hello
+- Install nodemon and update scripts inside package.json
+- What are dependencies
+- What is the use of "-g" while npm install
+- Difference between caret and tilde ( ^ vs ~ )
 
+- Initialize the git repository
+- .gitignore
+- create a remote repo on github
+- Play with routes and route extensions /,/test,/hello,/xyz
+- Ordering of routes is important
+- Install Postman and make collection Workspace > test API call
+- Write Logic to handle GET,POST,DELETE,PUT,PATCH
+- Explore routing and use of ?, + , (), \* in the routes
+- Use of regex in routes /a/ , /.\*fly$/
+- Reading the query params in the routes
+- Reading the dynamic routes
 
- - Initialize the git repository
- - .gitignore
- - create a remote repo on github
- - Play with routes and route extensions /,/test,/hello,/xyz
- - Ordering of routes is important
- - Install Postman and make collection Workspace > test API call
- - Write Logic to handle GET,POST,DELETE,PUT,PATCH
- -  Explore routing and use of ?, + , (), * in the routes
- - Use of regex in routes /a/ ,  /.*fly$/
- - Reading the query params in the routes
- - Reading the dynamic routes
+- Multiple route Handling (play with the code)
+- next() method
+- next() function and errors along with res.send()
+- app.use("/route", rh1, [rh2, rh3], rh4, rh5, rh6);
