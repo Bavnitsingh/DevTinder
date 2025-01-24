@@ -30,4 +30,5 @@
 - How Express js handles requests behind the scenes?
 - Difference between app.use() and app.all().
 - Write a dummy auth middleware for user and admin 
+- Error handling using wildcard app.use("/user",(err,req,res,next)=>{})
 
