@@ -1,32 +1,35 @@
 const express = require("express");
-
+const connectDB = require("./config/database");
 const app = express();
-
-app.use("/", (err, req, res, next) => {
-  if (err) {
-    // Log your error
-    res.status(500).send("something went wrong");
+const User = require("./Models/user");
+// Post Api
+app.post("/signup", async (req, res) => {
+  const user = new User({
+    firstName: "Harman Singh",
+    lastName: "Chhabda",
+    emailId: "harman@gmail.com",
+    password: "abc123",
+  });
+  try {
+     await user.save();
+  res.send("User created successfully");
   }
-});
-
-app.get("/getUserData", (req, res) => {
-  //try {
-  // Logic of DB call and get user data
-
-  throw new Error("dvbzhjf");
-  res.send("User Data Sent");
-  //   } catch (err) {
-  //     res.status(500).send("Some Error contact support team");
-  //   }
-});
-// Always put Wildcard error handling at last so that above error can be handled here
-app.use("/", (err, req, res, next) => {
-  if (err) {
-    // Log your error
-    res.status(500).send("something went wrong");
+  catch (err) {
+    res.status(400).send("error in creating user:" , err);
   }
+ 
 });
 
-app.listen(7777, () => {
-  console.log("Server is successfully listening on port 7777...");
-});
+// creating a new instance of the user model
+
+// we should firat connect the db then start the server
+connectDB()
+  .then(() => {
+    console.log("DB connection established...");
+    app.listen(7777, () => {
+      console.log("Server is successfully listening on port 7777...");
+    });
+  })
+  .catch((err) => {
+    console.error("Error in connecting db");
+  });
