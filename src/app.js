@@ -2,14 +2,13 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./Models/user");
+
+//  express json middleware
+app.use(express.json());
 // Post Api
 app.post("/signup", async (req, res) => {
-  const user = new User({
-    firstName: "Harman Singh",
-    lastName: "Chhabda",
-    emailId: "harman@gmail.com",
-    password: "abc123",
-  });
+  
+  const user = new User(req.body);
   try {
      await user.save();
   res.send("User created successfully");
