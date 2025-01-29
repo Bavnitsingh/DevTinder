@@ -48,5 +48,11 @@
  - User.findOne() with duplicate emailId and see which obj returns.
  - Get User by emailId
 - Api - Feed Api -> GET /feed - get all the users from the database
+- Api - Get user by Id Api -> GET /user - get all the users from the database by id
+- Api - CRUD user Api
+- Put vs Patch Api
+- Explore the Mongoose documentation for Models
+- Update user with EmailId
+- Explore more about Mongoose Model findbyIdandupdate options
 
 

@@ -17,6 +17,42 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Get user by Id
+app.get("/user", async (req, res) => {
+  try {
+    const user = await User.findById();
+    res.send(user);
+  } catch (error) {
+    res.status(400).send("error in getting user");
+  }
+})
+ // Delete a user from the database
+app.delete("/user", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const deletedUser = await User.findByIdAndDelete(userId);
+    res.send("User deleted successfully");
+    } catch (err) {
+    res.status(400).send("error in creating user:");
+    
+  }
+})
+
+// Update a user in the database
+app.patch("/user", async (req, res) => {
+  const userId = req.body.userId;
+  const data = req.body;
+  try {
+   const user =  await User.findByIdAndUpdate({ _id: userId }, data, {
+      returnDocument: "before"
+    });
+    console.log(user)
+    res.send("User updated successfully");
+  } catch (err) {
+    res.status(400).send("error in creating user:");
+  }
+})
+
 // Get user by email
 app.get("/user", async (req, res) => {
   try {
@@ -31,6 +67,8 @@ app.get("/user", async (req, res) => {
     res.status(400).send("Something went wrong");
   }
 });
+
+
 //Feed Api = GET /feed - get all the users from the database
 app.get("/feed", async (req, res, next) => {
   try {
