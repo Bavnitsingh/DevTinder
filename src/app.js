@@ -13,17 +13,20 @@ app.post("/signup", async (req, res) => {
     await user.save();
     res.send("User created successfully");
   } catch (err) {
-    res.status(400).send("error in creating user:", err);
+    res
+      .status(400)
+      .send( "Error in creating user : " + err.message );
   }
 });
+
 
 // Get user by Id
 app.get("/user", async (req, res) => {
   try {
     const user = await User.findById();
     res.send(user);
-  } catch (error) {
-    res.status(400).send("error in getting user");
+  } catch (err) {
+     res.status(400).send("Error in getting user : " + err.message);
   }
 })
  // Delete a user from the database
@@ -33,42 +36,42 @@ app.delete("/user", async (req, res) => {
     const deletedUser = await User.findByIdAndDelete(userId);
     res.send("User deleted successfully");
     } catch (err) {
-    res.status(400).send("error in creating user:");
+     res.status(400).send("Error in deleting user : " + err.message);
     
   }
 })
 
 // Update a user in the database
-// app.patch("/user", async (req, res) => {
-//   const userId = req.body.userId;
-//   const data = req.body;
-//   try {
-//    const user =  await User.findByIdAndUpdate({ _id: userId }, data, {
-//       returnDocument: "before"
-//     });
-//     console.log(user)
-//     res.send("User updated successfully");
-//   } catch (err) {
-//     res.status(400).send("error in creating user:");
-//   }
-// })
-
-// Update a user by emailId
 app.patch("/user", async (req, res) => {
+  const userId = req.body.userId;
   const data = req.body;
-  const emailId = req.body.emailId;
   try {
-    const user = await User.findOneAndUpdate(
-      { "emailId": emailId },
-      data,
-      { new: true }
-    );
-    console.log(user);
+   const user =  await User.findByIdAndUpdate({ _id: userId }, data, {
+     returnDocument: "before",
+     runValidators : true
+    });
+    console.log(user)
     res.send("User updated successfully");
   } catch (err) {
-    res.status(400).send("error in updating user:");
-  }
-});
+ res.status(400).send("Error in creating user : " + err.message);  }
+})
+
+// Update a user by emailId
+// app.patch("/user", async (req, res) => {
+//   const data = req.body;
+//   const emailId = req.body.emailId;
+//   try {
+//     const user = await User.findOneAndUpdate(
+//       { "emailId": emailId },
+//       data,
+//       { new: true }
+//     );
+//     console.log(user);
+//     res.send("User updated successfully");
+//   } catch (err) {
+//     res.status(400).send("error in updating user:");
+//   }
+// });
 // Get user by email
 app.get("/user", async (req, res) => {
   try {
@@ -80,8 +83,7 @@ app.get("/user", async (req, res) => {
       res.send(users);
     }
   } catch (err) {
-    res.status(400).send("Something went wrong");
-  }
+ res.status(400).send("Error in creating user : " + err.message);  }
 });
 
 
@@ -91,8 +93,7 @@ app.get("/feed", async (req, res, next) => {
     const users = await User.find({});
     res.send(users);
   } catch (error) {
-    res.status(400).send("Something went wrong");
-  }
+ res.status(400).send("Error in creating user : " + err.message);  }
 });
 // creating a new instance of the user model
 
