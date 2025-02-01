@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
         },
         message:
           "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.",
-      }
+      },
     },
     age: {
       type: Number,
@@ -62,6 +62,7 @@ const userSchema = new mongoose.Schema(
     },
     skills: {
       type: [String],
+      set: (skills) => [...new Set(skills.map((skill) => skill.trim()))], // Remove duplicates and trim spaces
     },
   },
   {
