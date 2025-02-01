@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const validator = require("validator");
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -16,23 +16,20 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      match: [
-        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Invalid email format",
-      ],
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Invalid email address." + value);
+        }
+      },
     },
     password: {
       type: String,
       required: true,
       minlength: 8,
-      validate: {
-        validator: function (value) {
-          return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-            value
-          );
-        },
-        message:
-          "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.",
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Enter Strong Password : min 1 UpperCase,lowercase,special character,number" + value);
+        }
       },
     },
     age: {
@@ -55,6 +52,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://p.kindpng.com/picc/s/150-1503949_computer-icons-user-profile-male-profile-icon-png.png",
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Invalid Url." + value);
+        }
+      },
     },
     about: {
       type: String,
