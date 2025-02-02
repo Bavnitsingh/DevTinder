@@ -67,4 +67,11 @@
  - Explore validator library funcation and Use vlidator funcs for password, email, photoURL
  - NEVER TRUST req.body
 
+ - Validate Data in Signup API
+ - install bcrypt package
+ - create a passwodhash using bcrypt.hash and save the users with encrypted password
+ - Create Login Api
+ - Compare passwords and throw errors if email or password is invalid
+
+
 
