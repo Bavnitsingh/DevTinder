@@ -72,6 +72,16 @@
  - create a passwodhash using bcrypt.hash and save the users with encrypted password
  - Create Login Api
  - Compare passwords and throw errors if email or password is invalid
+ - Install cookie-parser
+ - Just send a dummy cookie to user
+ - Create GET profile and check if you get the cookie back
+ - Install jsonwebtoken
+ - In Login Api, after email and password validation create a jwt token and send it to the user
+ - Write the user Auth Middleware
+ - Create an expiry date for cookie and jwt token
+ - create UserSchema method to getJWT
+ - create userSchema method for password Validation
+ 
 
 
 

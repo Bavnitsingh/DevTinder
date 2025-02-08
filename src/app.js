@@ -5,8 +5,12 @@ const User = require("./models/user");
 const { ValidateSignupData } = require("./utils/validation");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken")
+const {userAuth} = require("./middlewares/auth")
 //  express json middleware
 app.use(express.json());
+app.use(cookieParser());
 
 // Post Api -> Signup Api
 app.post("/signup", async (req, res) => {
@@ -33,6 +37,16 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Profile GET Api
+app.get("/profile",userAuth , async (req, res) => { 
+  try { 
+    const user = req.user;
+    res.send(user)
+  } catch (err) {
+    res.status(400).send("Error : " + err.message);
+  }
+})
+
 // Login Api
 app.post("/login", async (req, res) => {
   try {
@@ -45,107 +59,34 @@ app.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await user.passwordValidation(password);
     if (isPasswordValid) {
+      // Create a JWT token
+
+      const token = await user.getJWT();
+      // Add the token to cookie and send the response back to the user
+      res.cookie("token", token,{expires : new Date(Date.now() + 10 * 3600000)});
+
       res.send("Login successfully!!!");
-    }
-    else {
+    } else {
       throw new Error("Invalid credentials");
     }
-
   } catch (err) {
     res.status(400).send("Error : " + err.message);
   }
 });
 
-// Get user by Id
-app.get("/user", async (req, res) => {
-  try {
-    const user = await User.findById();
-    res.send(user);
-  } catch (err) {
-    res.status(400).send("Error in getting user : " + err.message);
-  }
-});
-// Delete a user from the database
-app.delete("/user", async (req, res) => {
-  try {
-    const userId = req.body.userId;
-    const deletedUser = await User.findByIdAndDelete(userId);
-    res.send("User deleted successfully");
-  } catch (err) {
-    res.status(400).send("Error in deleting user : " + err.message);
-  }
-});
 
-// Update a user in the database
-app.patch("/user/:userId", async (req, res) => {
-  const userId = req.params?.userId;
-  const data = req.body;
-
+app.post("/sendConnectionRequest",userAuth, async (req, res) => {
   try {
-    const ALLOWED_UPDATES = ["photoUrl", "gender", "age", "about", "skills"];
-    const isUpdateAllowed = Object.keys(data).every((k) =>
-      ALLOWED_UPDATES.includes(k)
-    );
-    if (!isUpdateAllowed) {
-      throw new Error("Invalid updates!");
-    }
-    if (data?.skills.length > 15) {
-      throw new Error("Skills cannot exceed 15!");
-    }
-    const user = await User.findByIdAndUpdate({ _id: userId }, data, {
-      returnDocument: "before",
-      runValidators: true,
-    });
-    console.log(user);
-    res.send("User updated successfully");
+    const user = req.user;
+
+    console.log("Sending connection");
+    res.send(user.firstName + " is sending request");
   } catch (err) {
-    res.status(400).send("Error in creating user : " + err.message);
+    res.status(400).send("Error : " + err.message);
   }
 });
-
-// Update a user by emailId
-// app.patch("/user", async (req, res) => {
-//   const data = req.body;
-//   const emailId = req.body.emailId;
-//   try {
-//     const user = await User.findOneAndUpdate(
-//       { "emailId": emailId },
-//       data,
-//       { new: true }
-//     );
-//     console.log(user);
-//     res.send("User updated successfully");
-//   } catch (err) {
-//     res.status(400).send("error in updating user:");
-//   }
-// });
-// Get user by email
-app.get("/user", async (req, res) => {
-  try {
-    const userEmail = req.body.emailId;
-    const users = await User.findOne({ emailId: userEmail }); // this is array
-    if (users.length === 0) {
-      res.status(404).send("User not found");
-    } else {
-      res.send(users);
-    }
-  } catch (err) {
-    res.status(400).send("Error in creating user : " + err.message);
-  }
-});
-
-//Feed Api = GET /feed - get all the users from the database
-app.get("/feed", async (req, res, next) => {
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (error) {
-    res.status(400).send("Error in creating user : " + err.message);
-  }
-});
-// creating a new instance of the user model
 
 // we should firat connect the db then start the server
 connectDB()
