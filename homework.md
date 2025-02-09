@@ -81,6 +81,16 @@
  - Create an expiry date for cookie and jwt token
  - create UserSchema method to getJWT
  - create userSchema method for password Validation
+
+ - Explore Tinder Apis
+ - Create a list of All Apis you can think of in DEVTINDER
+ - Group multiple routes under respective routers
+ - Read Documentation from Express.router
+ - Create Routes folder for authRouter,profileRouter and requestRouter
+ - Create authRouter,profileRouter and requestRouter
+ - Import These Routers in app.js
+ 
+
  
 
 
