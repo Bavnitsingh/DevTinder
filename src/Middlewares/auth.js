@@ -5,19 +5,19 @@ const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token) { 
-       res.status(400).send("Token is not valid!!");
+      return res.status(400).send( "Token is not valid!!");
     }
     const decodedObj = await jwt.verify(token, "DEVTINDER@harman");
     const { _id } = decodedObj;
     const user = await User.findById(_id);
     if (!user) {
-      throw new Error("User not found");
+       return res.status(400).send("User not found"); 
     }// if valid user then next Api is called
 
     req.user = user;  // setting user info in req object for further use in apis.  
     next();
   } catch (err) { 
-    res.status(400).send("ERROR : " + err.message)
+   return res.status(400).send("ERROR : " + err.message)
   }
 
 };

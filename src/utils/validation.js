@@ -12,4 +12,11 @@ const ValidateSignupData = (req) => {
     throw new Error("Please enter a strong password.");
   }
 }
-module.exports = { ValidateSignupData };
+
+const ValidateProfileEditData = (req) => {
+  const allowedEditFields = ["firstName", "lastName", "skills", "about", "age", "gender", "emailId", "photoUrl"];
+  const isEditAllowed = Object.keys(req.body).every(field => allowedEditFields.includes(field));
+  return isEditAllowed;
+
+}
+module.exports = { ValidateSignupData, ValidateProfileEditData };
