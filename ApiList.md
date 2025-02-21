@@ -5,9 +5,9 @@
 - POST /auth/logout
 
 ## profileRouter
-- GET / profile/view
-- PATCH / profile/edit
-- PATCH / profile / password
+- GET /profile/view
+- PATCH /profile/edit
+- PATCH /profile/password
 
 ## connectionRequestRouter
 - POST /request/send/interested/:userId

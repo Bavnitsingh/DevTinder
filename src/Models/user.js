@@ -79,7 +79,7 @@ userSchema.methods.getJWT = async function () {
   const token = await jwt.sign({ _id: user._id }, "DEVTINDER@harman", { expiresIn: "7d" });
   return token;
 }
-
+ userSchema.index({ firstName: 1, lastName: 1 });
 userSchema.methods.passwordValidation = async function (passwordInputByUser) {
   const user = this;
   const passwordHash = user.password;
@@ -87,6 +87,7 @@ userSchema.methods.passwordValidation = async function (passwordInputByUser) {
     passwordInputByUser,
     passwordHash
   );
+ 
   return isPasswordValid;
 }
 module.exports = mongoose.model("User", userSchema); // mongoose.model("Name",schema);

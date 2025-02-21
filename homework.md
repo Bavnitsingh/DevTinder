@@ -93,6 +93,17 @@
  - Create Patch /profile/edit
  - Create Patch /profile/password - forgot password Api
  - Make sure you validate the data in every POST PATCH data
+
+ - Create connectionRequestSchema 
+ - Send ConnectionRequestApi
+ - Read more about  compound  Indexes  - https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/ 
+
+ - Why do we need Indexes?
+ - Advantages and disadvantages of creating indexes
+ - Proper validation of Data
+ - $or query and $and query in Mongoose - https://www.mongodb.com/docs/manual/reference/operator/query-logical/
+ - Schema.pre middleware
+ - Think about corner cases in connection Request Api
  
 
  
