@@ -14,7 +14,6 @@ authRouter.post("/signup", async (req, res) => {
     const { firstName, lastName, emailId, password } = req.body;
     // Await bcoz it returns a promise
     const passwordHash = await bcrypt.hash(password, 10); // bcrypt.hash(password,saltrounds)
-    // console.log(passwordHash);
     // create a new user instance
     const user = new User({
       firstName,
@@ -50,7 +49,7 @@ authRouter.post("/login", async (req, res) => {
         expires: new Date(Date.now() + 10 * 3600000),
       });
 
-      res.send("Login successfully!!!");
+      res.send(user);
     } else {
       throw new Error("Invalid credentials");
     }
