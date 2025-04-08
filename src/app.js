@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 7777;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  // "https://your-frontend-name.vercel.app", // replace this
+  "https://0cb1-103-79-8-185.ngrok-free.app/",
+  // "https://your-frontend-name.vercel.app", // replace this if needed
 ];
 
 const authRouter = require("./routes/auth");
@@ -19,16 +20,8 @@ const userRouter = require("./routes/user");
 
 app.use(
   cors({
-<<<<<<< HEAD
-    origin: ["http://localhost:5173",
-      "https://0cb1-103-79-8-185.ngrok-free.app/"
-    ],
-    credentials:true
-
-=======
     origin: allowedOrigins,
     credentials: true,
->>>>>>> e3e3e0c (Production Build)
   })
 );
 app.use(express.json());
@@ -38,7 +31,7 @@ app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
 
-// we should firat connect the db then start the server
+// we should first connect the db then start the server
 connectDB()
   .then(() => {
     console.log("DB connection established...");
@@ -47,5 +40,5 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.error("Error in connecting db");
+    console.error("Error in connecting db", err);
   });
