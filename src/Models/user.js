@@ -76,7 +76,9 @@ const userSchema = new mongoose.Schema(
 );
 userSchema.methods.getJWT = async function () {
   const user = this;// this keyword not work in => function that's why use normal function
-  const token = await jwt.sign({ _id: user._id }, "DEVTINDER@harman", { expiresIn: "7d" });
+  const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
   return token;
 }
  userSchema.index({ firstName: 1, lastName: 1 });

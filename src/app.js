@@ -3,6 +3,14 @@ const connectDB = require("./config/database");
 const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+require("dotenv").config();
+
+const PORT = process.env.PORT || 7777;
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  // "https://your-frontend-name.vercel.app", // replace this
+];
 
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
@@ -11,11 +19,16 @@ const userRouter = require("./routes/user");
 
 app.use(
   cors({
+<<<<<<< HEAD
     origin: ["http://localhost:5173",
       "https://0cb1-103-79-8-185.ngrok-free.app/"
     ],
     credentials:true
 
+=======
+    origin: allowedOrigins,
+    credentials: true,
+>>>>>>> e3e3e0c (Production Build)
   })
 );
 app.use(express.json());
@@ -29,8 +42,8 @@ app.use("/", userRouter);
 connectDB()
   .then(() => {
     console.log("DB connection established...");
-    app.listen(7777, () => {
-      console.log("Server is successfully listening on port 7777...");
+    app.listen(PORT, () => {
+      console.log(`Server is successfully listening on port ...${PORT}`);
     });
   })
   .catch((err) => {
