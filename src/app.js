@@ -11,7 +11,9 @@ const userRouter = require("./routes/user");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173",
+      "https://0cb1-103-79-8-185.ngrok-free.app/"
+    ],
     credentials:true
 
   })
