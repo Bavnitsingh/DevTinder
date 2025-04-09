@@ -1,7 +1,7 @@
 // handled issue
 const express = require("express");
 const profileRouter = express.Router();
-const { userAuth } = require("../middlewares/auth");
+const { userAuth } = require("../Middlewares/auth");
 const { ValidateProfileEditData } = require("../utils/validation");
 const bcrypt = require("bcrypt");
 // Profile GET Api
