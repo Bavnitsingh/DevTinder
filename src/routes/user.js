@@ -3,8 +3,8 @@ const express = require("express");
 const { userAuth } = require("../Middlewares/auth");
 const { Connection } = require("mongoose");
 const userRouter = express.Router();
-const User = require("../models/user");
-const ConnectionRequest = require("../models/connectionRequest");
+const User = require("../Models/user");
+const ConnectionRequest = require("../Models/connectionRequest");
 // Get all the pending connection Requests for the loggedIn user
 userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   try {
