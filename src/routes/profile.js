@@ -1,3 +1,4 @@
+// handled issue
 const express = require("express");
 const profileRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
@@ -21,10 +22,10 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
     }
     const loggedInUser = req.user;
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
-   await loggedInUser.save();
+    await loggedInUser.save();
     res.json({
       message: `${loggedInUser.firstName} , your profile updated successfully`,
-      data: loggedInUser
+      data: loggedInUser,
     });
   } catch (err) {
     res.status(400).send("Error : " + err.message);
@@ -37,25 +38,25 @@ profileRouter.patch("/profile/password", userAuth, async (req, res) => {
     const { oldpassword, newpassword } = req.body;
     // validate input
 
-    if (!oldpassword || !newpassword) { 
+    if (!oldpassword || !newpassword) {
       throw new Error("Please provide old and new password");
     }
     const user = req.user;
     if (!user) {
       throw new Error("User Not Found");
     }
-    const isPasswordMatch = await bcrypt.compare(oldpassword, user.password)
+    const isPasswordMatch = await bcrypt.compare(oldpassword, user.password);
     if (!isPasswordMatch) {
       throw new Error("You have entered wrong password!!");
     }
-    const passwordHash = await bcrypt.hash(newpassword, 10)
+    const passwordHash = await bcrypt.hash(newpassword, 10);
     user.password = passwordHash;
-    await user.save()
+    await user.save();
     res.json({
-      message: `${user.firstName}, your password updated successfully`
-    })
+      message: `${user.firstName}, your password updated successfully`,
+    });
   } catch (err) {
     res.status(400).send("Error : " + err.message);
   }
-})
+});
 module.exports = profileRouter;

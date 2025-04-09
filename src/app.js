@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 7777;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://0cb1-103-79-8-185.ngrok-free.app/",
   // "https://your-frontend-name.vercel.app", // replace this if needed
 ];
 
