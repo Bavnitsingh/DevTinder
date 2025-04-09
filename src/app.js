@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 7777;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://dev-tinder-web-six.vercel.app"
+  "https://dev-tinder-web-roan-iota.vercel.app/",
 ];
 
 const authRouter = require("./routes/auth");
