@@ -12,6 +12,7 @@ const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 const initializeSocket = require("./utils/socket");
 const chatRouter = require("./routes/chat");
+const PORT = process.env.PORT || 7777;
 
 app.use(
   cors({
@@ -33,7 +34,6 @@ initializeSocket(server);
 connectDB()
   .then(() => {
     console.log("DB connection established...");
-    const PORT = process.env.PORT || 7777;
     server.listen(PORT, () => {
       console.log(`Server is successfully listening on port ${PORT}...`);
     });
