@@ -3,23 +3,17 @@ const connectDB = require("./config/database");
 const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-require("dotenv").config();
-
-const PORT = process.env.PORT || 7777;
-
-const allowedOrigins = [
-  
-  "https://dev-tinder-web-roan-iota.vercel.app"
-];
-
+const http = require("http");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
+const initializeSocket = require("./utils/socket");
+const chatRouter = require("./routes/chat");
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: process.env.CLIENT_ORIGIN?.split(",") || ["http://localhost:5173"],
     credentials: true,
   })
 );
@@ -29,15 +23,19 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+app.use("/", chatRouter);
 
+const server = http.createServer(app);
+initializeSocket(server);
 // we should first connect the db then start the server
 connectDB()
   .then(() => {
     console.log("DB connection established...");
-    app.listen(PORT, () => {
-      console.log(`Server is successfully listening on port ...${PORT}`);
+    const PORT = process.env.PORT || 7777;
+    server.listen(PORT, () => {
+      console.log(`Server is successfully listening on port ${PORT}...`);
     });
   })
   .catch((err) => {
-    console.error("Error in connecting db", err);
+    console.error("Error in connecting db");
   });
